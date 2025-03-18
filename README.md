@@ -6,7 +6,7 @@ Bu proje, Ocelot API Gateway kullanarak mikroservis mimarisi ile geliştirilmiş
 
 ```
 DefinexOcelotApiOrnek/
-├── ApiGateway/                 # Ocelot API Gateway
+├── ApiGateway/                # Ocelot API Gateway
 ├── ApiGateway2/               # Yatay ölçeklendirme için ikinci API Gateway örneği
 ├── Article.Api/               # Makale mikroservisi
 ├── Writer.Api/                # Yazar mikroservisi
@@ -56,8 +56,19 @@ DefinexOcelotApiOrnek/
    ```
 
 2. **Veritabanı Kurulumu**
+
+  Projeyi denemek isteyenler için, ana dizinde bulunan `setup.sql` dosyası ile veritabanını hızlıca oluşturabilirsiniz.
+
+2.1. ***SQL Script ile Kurulum***
+
+  -SQL Server Management Studio (SSMS) veya bir SQL istemcisi açın.
+  -Ana dizindeki `SQL_Script.sql` dosyasını çalıştırın:
+
+Bu işlem tamamlandıktan sonra, tüm mikroservisler gerekli veritabanlarına bağlanabilecek şekilde yapılandırılmış olacaktır.
+
+2.2. ***Veritabanı Kurulumu***
    - Her mikroservisin kendi veritabanı vardır
-   - Gerekirse `appsettings.json` dosyalarındaki bağlantı dizelerini güncelleyin
+   - Gerekirse her proje dosyası içerisindeki `appsettings.json` dosyalarındaki bağlantı dizelerini güncelleyin
    - Her mikroservis için migration'ları çalıştırın:
      ```bash
      cd Article.Api
@@ -131,213 +142,17 @@ Benzer pattern'ler yazarlar ve kategoriler için de mevcuttur.
 ## Mimari
 
 Uygulama aşağıdaki özelliklere sahip bir mikroservis mimarisi kullanır:
-1. Her mikroservisin kendi veritabanı vardır
-2. Servisler arası iletişim API Gateway üzerinden sağlanır
-3. WebUI uygulaması mikroservislerle API Gateway üzerinden iletişim kurar
-4. Yatay ölçeklendirme için birden fazla API Gateway örneği desteklenir
+
+- Her mikroservisin kendi veritabanı vardır
+- Servisler arası iletişim API Gateway üzerinden sağlanır
+- WebUI uygulaması mikroservislerle API Gateway üzerinden iletişim kurar
+- Yatay ölçeklendirme için birden fazla API Gateway örneği desteklenir
 
 ## Sınıf Diyagramı
 
-```mermaid
-classDiagram
-    class IArticleService {
-        <<interface>>
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Article article)
-        +UpdateAsync(Article article)
-        +DeleteAsync(int id)
-    }
-
-    class IWriterService {
-        <<interface>>
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Writer writer)
-        +UpdateAsync(Writer writer)
-        +DeleteAsync(int id)
-    }
-
-    class ICategoryService {
-        <<interface>>
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Category category)
-        +UpdateAsync(Category category)
-        +DeleteAsync(int id)
-    }
-
-    class ArticleService {
-        -_context: DbContext
-        -_mapper: IMapper
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Article article)
-        +UpdateAsync(Article article)
-        +DeleteAsync(int id)
-    }
-
-    class WriterService {
-        -_context: DbContext
-        -_mapper: IMapper
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Writer writer)
-        +UpdateAsync(Writer writer)
-        +DeleteAsync(int id)
-    }
-
-    class CategoryService {
-        -_context: DbContext
-        -_mapper: IMapper
-        +GetAllAsync()
-        +GetByIdAsync(int id)
-        +CreateAsync(Category category)
-        +UpdateAsync(Category category)
-        +DeleteAsync(int id)
-    }
-
-    class Article {
-        +int Id
-        +string Title
-        +string Content
-        +DateTime CreatedDate
-        +DateTime PublishedDate
-        +byte IsActive
-        +int WriterId
-        +int CategoryId
-        +Writer Writer
-        +Category Category
-    }
-
-    class Writer {
-        +int Id
-        +string Name
-        +string Surname
-        +string Email
-        +string Password
-        +DateTime CreatedDate
-        +byte IsActive
-        +List~Article~ Articles
-    }
-
-    class Category {
-        +int Id
-        +string Name
-        +string Description
-        +DateTime CreatedDate
-        +byte IsActive
-        +List~Article~ Articles
-    }
-
-    class ArticleController {
-        -_articleService: IArticleService
-        +GetAll()
-        +GetById(int id)
-        +Create(Article article)
-        +Update(int id, Article article)
-        +Delete(int id)
-    }
-
-    class WriterController {
-        -_writerService: IWriterService
-        +GetAll()
-        +GetById(int id)
-        +Create(Writer writer)
-        +Update(int id, Writer writer)
-        +Delete(int id)
-    }
-
-    class CategoryController {
-        -_categoryService: ICategoryService
-        +GetAll()
-        +GetById(int id)
-        +Create(Category category)
-        +Update(int id, Category category)
-        +Delete(int id)
-    }
-
-    IArticleService <|.. ArticleService : implements
-    IWriterService <|.. WriterService : implements
-    ICategoryService <|.. CategoryService : implements
-
-    ArticleService --> Article : manages
-    WriterService --> Writer : manages
-    CategoryService --> Category : manages
-
-    ArticleController --> IArticleService : uses
-    WriterController --> IWriterService : uses
-    CategoryController --> ICategoryService : uses
-
-    Article --> Writer : belongs to
-    Article --> Category : belongs to
-    Writer --> Article : has many
-    Category --> Article : has many
-```
+![lLLXRzCm4FsUNt4VGT3zW6f2Aor2aG1DsX0VaUiSdIN7gUpBHWJyTvJwdDHkwi2qxLESTw_sUywxwvKZOQcjTQ4CeVqX94AvigIanXkqzqeY_2e00DvyH5fflNATaQzU3z3xhgmyfWo1ghYojYW8VO6t0-6VpFYwhsOO6zH866_-fpWM-iqgGljKElrky71uZ2gpzNcDQq6uQsptL2h3VY](https://github.com/user-attachments/assets/ea364289-3ccb-4ba4-b88c-fd4874759e74)
 
 ## Veritabanı Şeması
 
-```mermaid
-erDiagram
-    ARTICLE ||--o{ WRITER : "belongs to"
-    ARTICLE ||--o{ CATEGORY : "belongs to"
-    
-    ARTICLE {
-        int Id PK "Primary Key"
-        string Title "Article Title"
-        string Content "Article Content"
-        datetime CreatedDate "Creation Date"
-        datetime PublishedDate "Publication Date"
-        byte IsActive "Active Status"
-        int WriterId FK "References Writer(Id)"
-        int CategoryId FK "References Category(Id)"
-    }
-    
-    WRITER {
-        int Id PK "Primary Key"
-        string Name "Writer's First Name"
-        string Surname "Writer's Last Name"
-        string Email "Writer's Email"
-        string Password "Hashed Password"
-        datetime CreatedDate "Creation Date"
-        byte IsActive "Active Status"
-    }
-    
-    CATEGORY {
-        int Id PK "Primary Key"
-        string Name "Category Name"
-        string Description "Category Description"
-        datetime CreatedDate "Creation Date"
-        byte IsActive "Active Status"
-    }
+![jPDHQzim4CVV_IaElsnZz0kCKXhIT3CjMt03POyN-neVo5BHdLVCsky-HRRcp0s15PgN-4w_--lkB-bI5BrshSd8AciFYt9JB6zNy3k3yFiCR1MA6ixFrpSN5v2lFRVeUxYXFXy9KSzs1njMGv0ll79bQ0XdoD9P9QiJD2OILgEISXlodb2fla8DYZ5WPs4VlaBNtTQmD0cEOVMQt_PAKCYY](https://github.com/user-attachments/assets/084f1775-a03f-4986-a452-6e08921f395b)
 
-    note for ARTICLE "Articles are associated with both Writers and Categories"
-    note for WRITER "Writers can have multiple articles"
-    note for CATEGORY "Categories can contain multiple articles"
-```
-
-## Hata Yönetimi
-
-- Her mikroservis uygun hata yönetimi içerir
-- API Gateway hata yönetimi ve rate limiting içerir
-- WebUI kullanıcı dostu hata mesajları gösterir
-- Tüm bileşenlerde loglama uygulanmıştır
-
-## Güvenlik
-
-- Tüm servisler için HTTPS etkinleştirilmiştir
-- API Gateway rate limiting içerir
-- Tüm formlarda giriş doğrulama uygulanmıştır
-- Entity Framework ile SQL injection önlemi
-
-## Katkıda Bulunma
-
-1. Projeyi fork edin
-2. Feature branch oluşturun
-3. Değişikliklerinizi commit edin
-4. Branch'inizi push edin
-5. Pull Request oluşturun
-
-## Lisans
-
-Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için LICENSE dosyasına bakın. "# Definex_Ocelot_Api_Ornek" 
