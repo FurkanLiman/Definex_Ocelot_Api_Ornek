@@ -1,0 +1,11 @@
+@Category.Api_HostAddress = http://localhost:5004
+
+GET {{Category.Api_HostAddress}}/api/categories
+Accept: application/json
+
+###
+
+GET {{Category.Api_HostAddress}}/api/categories/1
+Accept: application/json
+
+###

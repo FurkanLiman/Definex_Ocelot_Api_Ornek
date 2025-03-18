@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "About";
+}
+
+<h1>About Definex Ocelot API Gateway Demo</h1>
+
+<div class="mt-4">
+    <h3>Architecture Overview</h3>
+    <p>
+        This demonstration showcases a microservices architecture using Ocelot as an API Gateway.
+        The system consists of the following components:
+    </p>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>API Gateway</h4>
+        </div>
+        <div class="card-body">
+            <p>The Ocelot API Gateway handles routing of requests to the appropriate microservices:</p>
+            <ul>
+                <li>Primary Gateway: <code>https://localhost:5003</code></li>
+                <li>Secondary Gateway: <code>https://localhost:5006</code> (for horizontal scaling)</li>
+                <li>Features implemented: Routing, Rate Limiting, Caching, Load Balancing</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Microservices</h4>
+        </div>
+        <div class="card-body">
+            <p>Each microservice is responsible for managing its own domain:</p>
+            <ul>
+                <li><strong>Article.Api</strong> - <code>https://localhost:5001</code>: Manages articles</li>
+                <li><strong>Writer.Api</strong> - <code>https://localhost:5002</code>: Manages writers</li>
+            </ul>
+            <p>Each microservice connects to its own database, implementing a decoupled architecture.</p>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Frontend</h4>
+        </div>
+        <div class="card-body">
+            <p>This ASP.NET MVC application serves as the frontend to interact with the microservices through the API Gateway:</p>
+            <ul>
+                <li>Implements CRUD operations for both Articles and Writers</li>
+                <li>Communicates exclusively through the API Gateway, not directly with microservices</li>
+                <li>Provides a simple interface for demonstration purposes</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h3>Technologies Used</h3>
+    <ul>
+        <li><strong>Backend</strong>: ASP.NET Core 8, Ocelot, Entity Framework Core, Microsoft SQL Server</li>
+        <li><strong>Frontend</strong>: ASP.NET MVC, Bootstrap 5</li>
+        <li><strong>Architecture</strong>: Microservices, API Gateway pattern</li>
+    </ul>
+</div>
+
+<div class="mt-4">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+</div> 

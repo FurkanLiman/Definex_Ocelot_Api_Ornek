@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "WqfHxUtJnhXdKAetoLGv+h0JPE1GaKDLKkyY+cMFKVg=",
+  "Source": "Writer.Api",
+  "BasePath": "_content/Writer.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

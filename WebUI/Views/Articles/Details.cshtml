@@ -1,0 +1,46 @@
+@model WebUI.Models.ArticleModel
+
+@{
+    ViewData["Title"] = "Article Details";
+}
+
+<h1>Article Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PublishedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PublishedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WriterId)
+        </dt>
+        <dt class="col-sm-2">
+            Content
+        </dt>
+        <dd class="col-sm-10">
+            <div class="border p-3 rounded bg-light">
+                @Model.Content
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            Active
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.IsActive == 1 ? "Yes" : "No")
+        </dd>
+    </dl>
+</div>
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div> 

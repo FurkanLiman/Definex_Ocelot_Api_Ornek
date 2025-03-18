@@ -1,0 +1,93 @@
+﻿@model WebUI.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Definex Ocelot API Gateway Demo</h1>
+    <p>This is a microservices-based application using Ocelot API Gateway.</p>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Articles</h5>
+                <p class="card-text">Total Articles: @Model.Articles.Count</p>
+                <a asp-controller="Articles" asp-action="Index" class="btn btn-primary">View Articles</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Writers</h5>
+                <p class="card-text">Total Writers: @Model.Writers.Count</p>
+                <a asp-controller="Writers" asp-action="Index" class="btn btn-primary">View Writers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Categories</h5>
+                <p class="card-text">Total Categories: @Model.Categories.Count</p>
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-primary">View Categories</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h2>Recent Articles</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Writer</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in Model.Articles.OrderByDescending(a => a.CreatedDate).Take(5))
+                    {
+                        <tr>
+                            <td>@article.Title</td>
+                            <td>@article.CategoryName</td>
+                            <td>@article.WriterName</td>
+                            <td>@article.CreatedDate.ToString("MM/dd/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h3>API Gateway Architecture</h3>
+        </div>
+        <div class="card-body">
+            <p>This application uses an Ocelot API Gateway to route requests to the appropriate microservice:</p>
+            <ul>
+                <li><strong>API Gateway:</strong> Runs on port 5003 (and 5006 for horizontal scaling)</li>
+                <li><strong>Article.Api:</strong> Microservice for article management on port 5001</li>
+                <li><strong>Writer.Api:</strong> Microservice for writer management on port 5002</li>
+            </ul>
+            <p class="mt-3"><a asp-controller="Home" asp-action="About" class="btn btn-info">Learn More</a></p>
+        </div>
+    </div>
+</div>

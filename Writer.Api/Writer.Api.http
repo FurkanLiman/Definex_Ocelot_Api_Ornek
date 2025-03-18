@@ -1,0 +1,11 @@
+@Writer.Api_HostAddress = http://localhost:5002
+
+GET {{Writer.Api_HostAddress}}/api/writers
+Accept: application/json
+
+###
+
+GET {{Writer.Api_HostAddress}}/api/writers/1
+Accept: application/json
+
+###

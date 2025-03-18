@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Writer.Api\\Writer.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Writer.Api"
+      },
+      {
+        "Path": "Article.Api\\Article.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Article.Api"
+      },
+      {
+        "Path": "ApiGateway\\ApiGateway.csproj",
+        "Action": "Start",
+        "DebugTarget": "OcelotApiGateway"
+      },
+      {
+        "Path": "ApiGateway2\\ApiGateway2.csproj",
+        "Action": "Start",
+        "DebugTarget": "OcelotApiGateway2"
+      },
+      {
+        "Path": "WebUI\\WebUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "Category.Api\\Category.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Category.Api"
+      }
+    ]
+  }
+]

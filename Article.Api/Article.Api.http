@@ -1,0 +1,11 @@
+@Article.Api_HostAddress = http://localhost:5001
+
+GET {{Article.Api_HostAddress}}/api/articles
+Accept: application/json
+
+###
+
+GET {{Article.Api_HostAddress}}/api/articles/1
+Accept: application/json
+
+###

@@ -1,0 +1,66 @@
+@model WebUI.Models.ArticleListViewModel
+
+@{
+    ViewData["Title"] = "Articles";
+}
+
+<h1>Articles</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i> Create New</a>
+</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (Model.Articles.Count == 0)
+{
+    <div class="alert alert-info" role="alert">
+        No articles found.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Published Date</th>
+                    <th>Writer ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Articles)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.PublishedDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.WriterId)</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+</div> 

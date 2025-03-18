@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=.;Database=DefineX_Ocelot_API;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+} 

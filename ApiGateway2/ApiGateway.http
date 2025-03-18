@@ -1,0 +1,16 @@
+@ApiGateway_HostAddress = https://localhost:5006
+
+GET {{ApiGateway_HostAddress}}/gateway/writers
+Accept: application/json
+
+###
+
+GET {{ApiGateway_HostAddress}}/gateway/articles
+Accept: application/json
+
+###
+
+GET {{ApiGateway_HostAddress}}/gateway/categories
+Accept: application/json
+
+###
