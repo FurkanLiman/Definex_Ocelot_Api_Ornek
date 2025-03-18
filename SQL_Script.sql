@@ -1,30 +1,19 @@
--- =============================================
--- Definex Ocelot API Gateway Demo SQL Script
--- =============================================
-
--- Bu script üç mikroservis için gereken veritabanı yapısını oluşturur
--- ve örnek veriler ekler: Article.Api, Writer.Api ve Category.Api
-
--- =============================================
--- 1. Category.Api Veritabanı
--- =============================================
-
 USE master
 GO
 
 -- Eğer veritabanı varsa siliyoruz
-IF EXISTS (SELECT name FROM sys.databases WHERE name = 'CategoryDb')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'DefineX_Ocelot_API')
 BEGIN
-    ALTER DATABASE CategoryDb SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE CategoryDb;
+    ALTER DATABASE DefineX_Ocelot_API SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE DefineX_Ocelot_API;
 END
 GO
 
 -- Yeni veritabanı oluşturuyoruz
-CREATE DATABASE CategoryDb;
+CREATE DATABASE DefineX_Ocelot_API;
 GO
 
-USE CategoryDb;
+USE DefineX_Ocelot_API;
 GO
 
 -- Category tablosunu oluşturuyoruz
@@ -67,7 +56,7 @@ GO
 CREATE DATABASE WriterDb;
 GO
 
-USE WriterDb;
+USE DefineX_Ocelot_API;
 GO
 
 -- Writer tablosunu oluşturuyoruz
@@ -115,7 +104,7 @@ GO
 CREATE DATABASE ArticleDb;
 GO
 
-USE ArticleDb;
+USE DefineX_Ocelot_API;
 GO
 
 -- Article tablosunu oluşturuyoruz
@@ -163,19 +152,6 @@ VALUES
      GETDATE(), GETDATE(), 2, 1, 1),
      
     (N'E-Spor ve Yeni Nesil Spor Anlayışı', 
-     N'E-Spor'un geleneksel sporlar arasındaki yeri ve geleceği. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
+     N'E-Sporun geleneksel sporlar arasındaki yeri ve geleceği. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
      GETDATE(), GETDATE(), 3, 2, 1);
 GO
-
--- =============================================
--- 4. API Gateway Kullanım Notları
--- =============================================
-
--- Bu script ile oluşturulan veritabanlarını kullanabilmek için:
--- 1. Article.Api, Writer.Api ve Category.Api projeleri başlatılmalıdır
--- 2. ApiGateway başlatılmalıdır
--- 3. WebUI projesi başlatılmalıdır
-
--- NOT: Her mikroservisin kendi veritabanı olduğundan, gerçek bir uygulama 
--- senaryosunda servisler arası veri tutarlılığı sağlamak için ek
--- mekanizmalar (Event Sourcing, Saga Pattern vb.) gerekebilir. 
